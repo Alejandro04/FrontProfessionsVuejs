@@ -7,6 +7,7 @@ import Professions from "../components/Professions"
 import saveProfessions from "../components/saveProfessions"
 import updateProfessions from "../components/updateProfessions"
 import Municipalities from "../components/Municipalities"
+import saveMunicipalities from "../components/saveMunicipalities"
 
 Vue.use(VueRouter)
 
@@ -50,6 +51,11 @@ const routes = [
     path: '/municipalities',
     name: 'municipalities',
     component: Municipalities
+  },
+  {
+    path: '/municipalities/new',
+    name: 'saveMunicipalities',
+    component: saveMunicipalities
   },
 ]
 
