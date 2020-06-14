@@ -96,7 +96,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .app_title {
   font-size: 25px;
   margin-top: 50px;

@@ -30,8 +30,8 @@
 import axios from "axios";
 
 export default {
-name: "saveVehicle",
-data() {
+  name: "saveVehicle",
+  data() {
     return {
       brand: "",
       year: "",
@@ -52,8 +52,8 @@ data() {
           .then(response => {
             console.log(response);
             this.msg_success = true;
-            this.brand = ""
-            this.year = ""
+            this.brand = "";
+            this.year = "";
           })
           .catch(error => {
             console.log(error);
@@ -81,7 +81,7 @@ data() {
 };
 </script>
 
-<style>
+<style scoped>
 .app_title {
   font-size: 25px;
   margin-top: 50px;

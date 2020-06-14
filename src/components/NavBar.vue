@@ -26,9 +26,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .navbar {
   float: right;
+  margin-bottom: 40px;
 }
 </style>
 

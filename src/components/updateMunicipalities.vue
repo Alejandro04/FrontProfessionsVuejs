@@ -55,9 +55,12 @@ export default {
       let validation = this.validation();
       if (validation) {
         axios
-          .put(`http://localhost:8000/api/municipalities/${this.$route.params.id}`, {
-            name: this.name,
-          })
+          .put(
+            `http://localhost:8000/api/municipalities/${this.$route.params.id}`,
+            {
+              name: this.name
+            }
+          )
           .then(response => {
             console.log(response);
             this.msg_success = true;
@@ -80,7 +83,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .app_title {
   font-size: 25px;
   margin-top: 50px;
