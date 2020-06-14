@@ -1,6 +1,13 @@
 <template>
   <div>
-    <p class="app_title">Vehículos</p>
+    <div class="titles">
+      <h2>
+        Vehículos
+      </h2>
+      <div class="link">
+        <a href="/vehicles/new">Nuevo</a>
+      </div>
+    </div>
 
     <loading :active.sync="isLoading" :is-full-page="fullPage"></loading>
     <div v-if="msg_delete" class="success">Vehiculo eliminado</div>
@@ -99,5 +106,17 @@ export default {
 .success {
   font-size: 20px;
   color: green;
+}
+.titles{
+  margin-top: 50px;
+  display: flex;
+  align-items: flex-start;
+}
+.titles > h2{
+  margin-right: 20px;
+}
+.titles > .link > a{
+  position: relative;
+  top: 12px;
 }
 </style>
