@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="titles">
-      <h2>
-        Vehículos
-      </h2>
+      <h2>Vehículos</h2>
       <div class="link">
         <a href="/vehicles/new">Nuevo</a>
       </div>
@@ -11,6 +9,10 @@
 
     <loading :active.sync="isLoading" :is-full-page="fullPage"></loading>
     <div v-if="msg_delete" class="success">Vehiculo eliminado</div>
+    <div
+      v-if="msg_validate_record"
+      class="danger"
+    >No se puede eliminar el vehículo, está asignado a un usuario.</div>
     <table class="table">
       <thead>
         <tr>
@@ -60,6 +62,7 @@ export default {
     return {
       isLoading: false,
       fullPage: true,
+      msg_validate_record: false,
       vehicles: [],
       msg_delete: ""
     };
@@ -77,7 +80,7 @@ export default {
           });
         });
 
-        console.log(this.vehicles)
+        console.log(this.vehicles);
         this.isLoading = false;
       } catch (error) {
         console.error(error);
@@ -90,12 +93,16 @@ export default {
       axios
         .delete(`http://localhost:8000/api/vehicles/${id}`, {})
         .then(response => {
-          this.vehicles.splice(id, 1);
+          const vehicles = this.vehicles.filter(x => x.id != id);
+          this.vehicles = vehicles;
           this.msg_delete = true;
+          this.msg_validate_record = false;
           console.log(response);
         })
         .catch(error => {
           console.log(error);
+          this.msg_delete = false;
+          this.msg_validate_record = true;
         });
     }
   }
@@ -104,18 +111,24 @@ export default {
 
 <style>
 .success {
-  font-size: 20px;
   color: green;
 }
-.titles{
+.danger {
+  color: red;
+}
+.danger,
+.success {
+  font-size: 20px;
+}
+.titles {
   margin-top: 50px;
   display: flex;
   align-items: flex-start;
 }
-.titles > h2{
+.titles > h2 {
   margin-right: 20px;
 }
-.titles > .link > a{
+.titles > .link > a {
   position: relative;
   top: 12px;
 }

@@ -52,6 +52,8 @@ data() {
           .then(response => {
             console.log(response);
             this.msg_success = true;
+            this.brand = ""
+            this.year = ""
           })
           .catch(error => {
             console.log(error);
