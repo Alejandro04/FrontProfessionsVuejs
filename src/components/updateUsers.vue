@@ -132,11 +132,11 @@
         </div>
       </div>
       <div class="form-group">
-        <button @click="saveUsers" class="btn btn-success btn-lg">Save</button>
+        <button @click="updateUsers" class="btn btn-success btn-lg">Update</button>
       </div>
       <div>
         <div v-if="msg_success" class="success">
-          Usuario guardado!
+          Usuario actualizado!
           Ver usuarios
           <router-link to="/users">Usuarios</router-link>
         </div>
@@ -146,12 +146,14 @@
 </template>
 
 
+
 <script>
 import axios from "axios";
 
 export default {
-  name: "saveUsers",
+  name: "updateUsers",
   mounted() {
+    this.getUser();
     this.getVehicles();
     this.getProfessions();
     this.getMunicipalities();
@@ -189,11 +191,34 @@ export default {
     };
   },
   methods: {
-    saveUsers() {
+    async getUser() {
+      this.isLoading = true;
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/api/users/${this.$route.params.id}`
+        );
+        this.first_name = response.data.first_name;
+        this.last_name = response.data.last_name;
+        this.email = response.data.email;
+        this.phone = response.data.phone;
+        this.address = response.data.address;
+        this.password = response.data.password;
+        this.password_confirmation = response.data.password_confirmation;
+        this.birthdate = response.data.birthdate;
+        this.gender = response.data.gender;
+        this.vehicle_id = response.data.vehicle_id;
+        this.profession_id = response.data.profession_id;
+        this.municipality_id = response.data.municipality_id;
+        this.isLoading = false;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    updateUsers() {
       let validation = this.validation();
       if (validation) {
         axios
-          .post("http://localhost:8000/api/users", {
+          .patch(`http://localhost:8000/api/users/${this.$route.params.id}`, {
             first_name: this.first_name,
             last_name: this.last_name,
             email: this.email,
@@ -208,27 +233,11 @@ export default {
             municipality_id: this.municipality_id
           })
           .then(response => {
-            console.log(response)
-            this.msg_success = true
-            this.first_name = ""
-            this.last_name = ""
-            this.email = ""
-            this.phone = ""
-            this.address = ""
-            this.password = ""
-            this.password_confirmation = ""
-            this.birthdate = ""
-            this.gender = ""
-            this.vehicle_id = ""
-            this.municipality_id = ""
-            this.profession_id = ""
+            console.log(response);
+            this.msg_success = true;
           })
           .catch(error => {
-            // cómo capturar el error con estatus 422
-            // para mostrar mensaje o swit alert al usuario
-            // contraseña repetida o email con formato malo
-            //console.log(error.errors);
-            //this.msg_validate_record = false;
+            console.log(error);
           });
       }
     },
@@ -358,20 +367,19 @@ export default {
         }
         return false;
       } else {
-
         // Se ejecuta cuando la validación viene del api
-        this.label_first_name_validate = false
-        this.label_last_name_validate = false
-        this.label_email_validate = false
-        this.label_password_validate = false
-        this.label_password_confirmate_validate = false
-        this.label_phone_validate = false
-        this.label_address_validate = false
-        this.label_birthdate_validate = false
-        this.label_gender_validate = false
-        this.label_vehicle_id_validate = false
-        this.label_profession_id_validate = false
-        this.label_municipality_id_validate = false
+        this.label_first_name_validate = false;
+        this.label_last_name_validate = false;
+        this.label_email_validate = false;
+        this.label_password_validate = false;
+        this.label_password_confirmate_validate = false;
+        this.label_phone_validate = false;
+        this.label_address_validate = false;
+        this.label_birthdate_validate = false;
+        this.label_gender_validate = false;
+        this.label_vehicle_id_validate = false;
+        this.label_profession_id_validate = false;
+        this.label_municipality_id_validate = false;
 
         return true;
       }
@@ -395,7 +403,7 @@ export default {
   font-size: 20px;
   color: green;
 }
-.form-users{
+.form-users {
   display: flex;
   justify-content: space-between;
   flex-direction: column;

@@ -11,6 +11,7 @@ import saveMunicipalities from "../components/saveMunicipalities"
 import updateMunicipalities from "../components/updateMunicipalities"
 import Users from "../components/Users"
 import saveUsers from "../components/saveUsers"
+import updateUsers from "../components/updateUsers"
 
 Vue.use(VueRouter)
 
@@ -74,6 +75,11 @@ const routes = [
     path: '/users/new',
     name: 'saveUsers',
     component: saveUsers
+  },
+  {
+    path: '/users/:id',
+    name: 'updateUsers',
+    component: updateUsers
   },
 ]
 

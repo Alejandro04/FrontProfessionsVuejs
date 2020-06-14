@@ -108,7 +108,7 @@ export default {
         console.error(error);
       }
     },
-    updateProfession(id) {
+    updateUser(id) {
       this.$router.push(`users/${id}`);
     },
     deleteProfession(id) {
