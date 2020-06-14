@@ -5,6 +5,7 @@ import saveVehicles from "../components/saveVehicles"
 import updateVehicles from "../components/updateVehicles"
 import Professions from "../components/Professions"
 import saveProfessions from "../components/saveProfessions"
+import updateProfessions from "../components/updateProfessions"
 
 Vue.use(VueRouter)
 
@@ -38,6 +39,11 @@ const routes = [
     path: '/professions/new',
     name: 'saveProfession',
     component: saveProfessions
+  },
+  {
+    path: '/professions/:id',
+    name: 'updateProfessions',
+    component: updateProfessions
   },
 ]
 
