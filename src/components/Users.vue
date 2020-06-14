@@ -10,48 +10,50 @@
     <loading :active.sync="isLoading" :is-full-page="fullPage"></loading>
     <div v-if="msg_delete" class="success">Usuario eliminado</div>
     <div class="table_users">
-        <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Nombre</th>
-          <th scope="col">Apellido</th>
-          <th scope="col">Email</th>
-          <th scope="col">Teléfono</th>
-          <th scope="col">Dirección</th>
-          <th scope="col">Fecha de nacimiento</th>
-          <th scope="col">Genero</th>
-          <th scope="col">Profesión</th>
-          <th scope="col">Municipio</th>
-          <th scope="col">Vehículo</th>
-          <th scope="col">Actualizar</th>
-          <th scope="col">Eliminar</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in users" :key="item.id">
-          <td>{{ item.first_name }}</td>
-          <td>{{ item.last_name }}</td>
-          <td>{{ item.email }}</td>
-          <td>{{ item.phone }}</td>
-          <td>{{ item.address }}</td>
-          <td>{{ item.birthdate }}</td>
-          <td>{{item.gender}}</td>
-          <td>{{item.profession_id}}</td>
-          <td>{{item.municipality_id}}</td>
-          <td>{{item.vehicle_id}}</td>
-          <td>
-            <button class="btn btn-success" @click="updateUser(item.id)">
-              <i class="fa fa-edit"></i>
-            </button>
-          </td>
-          <td>
-            <button class="btn btn-danger" @click="deleteUser(item.id)">
-              <i class="fa fa-trash"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Email</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Dirección</th>
+            <th scope="col">Fecha de nacimiento</th>
+            <th scope="col">Genero</th>
+            <th scope="col">Profesión</th>
+            <th scope="col">Municipio</th>
+            <th scope="col">Marca de vehículo</th>
+            <th scope="col">Año de vehículo</th>
+            <th scope="col">Actualizar</th>
+            <th scope="col">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in users" :key="item.id">
+            <td>{{ item.first_name }}</td>
+            <td>{{ item.last_name }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.phone }}</td>
+            <td>{{ item.address }}</td>
+            <td>{{ item.birthdate }}</td>
+            <td>{{ item.gender }}</td>
+            <td>{{ item.name_profession }}</td>
+            <td>{{ item.name_municipality }}</td>
+            <td>{{ item.brand }}</td>
+            <td>{{ item.year }}</td>
+            <td>
+              <button class="btn btn-success" @click="updateUser(item.id)">
+                <i class="fa fa-edit"></i>
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-danger" @click="deleteUser(item.id)">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -85,9 +87,7 @@ export default {
     async getUsers() {
       this.isLoading = true;
       try {
-        const response = await axios.get(
-          "http://localhost:8000/api/users"
-        );
+        const response = await axios.get("http://localhost:8000/api/users");
         response.data.forEach(element => {
           this.users.push({
             id: element.id,
@@ -98,10 +98,12 @@ export default {
             address: element.address,
             birthdate: element.birthdate,
             gender: element.gender,
-            profession_id: element.profession_id,
-            municipality_id: element.municipality_id,
-            vehicle_id: element.vehicle_id
+            name_profession: element.name_profession,
+            name_municipality: element.name_municipality,
+            brand: element.brand,
+            year: element.year
           });
+          console.log(this.users)
         });
         this.isLoading = false;
       } catch (error) {
@@ -132,10 +134,10 @@ export default {
 </script>
 
 <style>
-.table_users{
-    width: 100%;
-    overflow-x: scroll;
-    padding-bottom: 50px;
+.table_users {
+  width: 100%;
+  overflow-x: scroll;
+  padding-bottom: 50px;
 }
 .success {
   color: green;
