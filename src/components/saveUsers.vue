@@ -148,6 +148,7 @@
 
 <script>
 import axios from "axios";
+import swal from "sweetalert";
 
 export default {
   name: "saveUsers",
@@ -208,22 +209,49 @@ export default {
             municipality_id: this.municipality_id
           })
           .then(response => {
-            console.log(response)
-            this.msg_success = true
-            this.first_name = ""
-            this.last_name = ""
-            this.email = ""
-            this.phone = ""
-            this.address = ""
-            this.password = ""
-            this.password_confirmation = ""
-            this.birthdate = ""
-            this.gender = ""
-            this.vehicle_id = ""
-            this.municipality_id = ""
-            this.profession_id = ""
+            console.log(response);
+            this.msg_success = true;
+            this.first_name = "";
+            this.last_name = "";
+            this.email = "";
+            this.phone = "";
+            this.address = "";
+            this.password = "";
+            this.password_confirmation = "";
+            this.birthdate = "";
+            this.gender = "";
+            this.vehicle_id = "";
+            this.municipality_id = "";
+            this.profession_id = "";
+            swal("Excelente!", "Usuario registrado", "success");
           })
           .catch(error => {
+            if (error.response.data.errors.password) {
+              if (this.password !== this.password_confirmation) {
+                swal(
+                  "Error!",
+                  "La contraseña debe ser igual a la confirmación de la contraseña",
+                  "error"
+                );
+              } else {
+                swal(
+                  "Error!",
+                  "La contraseña debe tener 8 caracteres como mínimo",
+                  "error"
+                );
+              }
+            }
+
+            if (error.response.data.errors.email) {
+              if (
+                error.response.data.errors.email ==
+                "The email has already been taken."
+              ) {
+                swal("Error!", "El email ya se encuentra registrado", "error");
+              } else {
+                swal("Error!", "El formato de email es inválido", "error");
+              }
+            }
             // cómo capturar el error con estatus 422
             // para mostrar mensaje o swit alert al usuario
             // contraseña repetida o email con formato malo
@@ -358,20 +386,19 @@ export default {
         }
         return false;
       } else {
-
         // Se ejecuta cuando la validación viene del api
-        this.label_first_name_validate = false
-        this.label_last_name_validate = false
-        this.label_email_validate = false
-        this.label_password_validate = false
-        this.label_password_confirmate_validate = false
-        this.label_phone_validate = false
-        this.label_address_validate = false
-        this.label_birthdate_validate = false
-        this.label_gender_validate = false
-        this.label_vehicle_id_validate = false
-        this.label_profession_id_validate = false
-        this.label_municipality_id_validate = false
+        this.label_first_name_validate = false;
+        this.label_last_name_validate = false;
+        this.label_email_validate = false;
+        this.label_password_validate = false;
+        this.label_password_confirmate_validate = false;
+        this.label_phone_validate = false;
+        this.label_address_validate = false;
+        this.label_birthdate_validate = false;
+        this.label_gender_validate = false;
+        this.label_vehicle_id_validate = false;
+        this.label_profession_id_validate = false;
+        this.label_municipality_id_validate = false;
 
         return true;
       }
@@ -395,7 +422,7 @@ export default {
   font-size: 20px;
   color: green;
 }
-.form-users{
+.form-users {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
