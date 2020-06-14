@@ -111,7 +111,7 @@ export default {
     updateUser(id) {
       this.$router.push(`users/${id}`);
     },
-    deleteProfession(id) {
+    deleteUser(id) {
       axios
         .delete(`http://localhost:8000/api/users/${id}`, {})
         .then(response => {
