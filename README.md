@@ -1,4 +1,7 @@
-# professions
+# Indicaciones
+1. Instalar el API https://github.com/Alejandro04/ApiLaravelProfessions
+2. Instalar Paquetes
+3. Ejecutar: npm run serve
 
 ## Project setup
 ```
