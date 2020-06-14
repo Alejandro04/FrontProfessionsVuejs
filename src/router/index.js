@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Vehicles from '../components/Vehicles'
 import saveVehicles from "../components/saveVehicles"
 import updateVehicles from "../components/updateVehicles"
+import Professions from "../components/Professions"
 
 Vue.use(VueRouter)
 
@@ -10,7 +11,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Vehicles
+    component: Professions
   },
   {
     path: '/vehicles',
@@ -26,6 +27,11 @@ const routes = [
     path: '/vehicles/:id',
     name: 'updateVehicles',
     component: updateVehicles
+  },
+  {
+    path: '/professions',
+    name: 'professions',
+    component: Professions
   },
 ]
 
