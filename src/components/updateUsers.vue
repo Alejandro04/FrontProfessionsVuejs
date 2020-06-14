@@ -26,27 +26,6 @@
           <input type="email" class="form-control" v-model="email" placeholder="Ingrese el email" />
         </div>
         <div class="form-group">
-          <div v-if="label_password_validate" class="validate">Por favor ingrese la contraseña</div>
-          <input
-            type="password"
-            class="form-control"
-            v-model="password"
-            placeholder="Ingrese la contraseña"
-          />
-        </div>
-        <div class="form-group">
-          <div
-            v-if="label_password_confirmate_validate"
-            class="validate"
-          >Por favor repita la contraseña</div>
-          <input
-            type="password"
-            class="form-control"
-            v-model="password_confirmation"
-            placeholder="Repita la contraseña"
-          />
-        </div>
-        <div class="form-group">
           <div v-if="label_phone_validate" class="validate">Por favor ingrese el teléfono</div>
           <input type="text" class="form-control" v-model="phone" placeholder="Ingrese el teléfono" />
         </div>
@@ -149,6 +128,7 @@
 
 <script>
 import axios from "axios";
+import swal from "sweetalert";
 
 export default {
   name: "updateUsers",
@@ -235,9 +215,34 @@ export default {
           .then(response => {
             console.log(response);
             this.msg_success = true;
+            swal("Excelente!", "Usuario actualizado", "success");
           })
           .catch(error => {
-            console.log(error);
+            if (error.response.data.errors.password) {
+              if (this.password !== this.password_confirmation) {
+                swal(
+                  "Error!",
+                  "La contraseña debe ser igual a la confirmación de la contraseña",
+                  "error"
+                );
+              } else {
+                swal(
+                  "Error!",
+                  "La contraseña debe tener 8 caracteres como mínimo",
+                  "error"
+                );
+              }
+            }
+            if (error.response.data.errors.email) {
+              if (
+                error.response.data.errors.email ==
+                "The email has already been taken."
+              ) {
+                swal("Error!", "El email ya se encuentra registrado", "error");
+              } else {
+                swal("Error!", "El formato de email es inválido", "error");
+              }
+            }
           });
       }
     },
