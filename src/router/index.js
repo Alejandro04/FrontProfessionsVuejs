@@ -10,6 +10,7 @@ import Municipalities from "../components/Municipalities"
 import saveMunicipalities from "../components/saveMunicipalities"
 import updateMunicipalities from "../components/updateMunicipalities"
 import Users from "../components/Users"
+import saveUsers from "../components/saveUsers"
 
 Vue.use(VueRouter)
 
@@ -68,6 +69,11 @@ const routes = [
     path: '/users',
     name: 'users',
     component: Users
+  },
+  {
+    path: '/users/new',
+    name: 'saveUsers',
+    component: saveUsers
   },
 ]
 
